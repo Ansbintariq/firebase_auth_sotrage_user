@@ -5,4 +5,5 @@ class RoutesConstants {
   static const started = "/";
   static const phonelogin = "/phonelogin";
   static const userOtp = "/userOtp";
+  static const myProfile = '/myProfile';
 }

@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:firebase_auth_getx_localization/model/user_model.dart';
-import 'package:firebase_auth_getx_localization/screens/home_screen/home_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthenticationServices extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -20,7 +21,8 @@ class AuthenticationServices extends GetxController {
   final TextEditingController fieldFour = TextEditingController();
   final TextEditingController fieldFive = TextEditingController();
   final TextEditingController fieldSix = TextEditingController();
-
+  RxString imagePath = ''.obs;
+  File? pickImage;
   FocusNode nameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode passFocus = FocusNode();
@@ -33,6 +35,7 @@ class AuthenticationServices extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore _db = FirebaseFirestore.instance;
   RxString verifyId = ''.obs;
+  var url = ''.obs;
   Future<void> signUp({
     required String name,
     required String email,
@@ -46,7 +49,10 @@ class AuthenticationServices extends GetxController {
         email: email,
         password: password,
       )
-          .then((value) {
+          .then((value) async {
+        await uploadImageToFirebase();
+
+        print("hellooooooooo ${url.value}");
         FirebaseFirestore.instance
             .collection("users")
             .doc(value.user!.uid)
@@ -54,9 +60,10 @@ class AuthenticationServices extends GetxController {
           'id': value.user!.uid,
           'name': name,
           'email': email,
+          'Url': url.value
         });
       }).then((value) => Timer(const Duration(seconds: 1), () {
-                Get.toNamed('/login');
+                Get.offNamed('/login');
               }));
       nameController.clear();
       emailController.clear();
@@ -67,6 +74,29 @@ class AuthenticationServices extends GetxController {
           backgroundColor: const Color.fromARGB(255, 255, 255, 255));
     }
     loading.value = false;
+  }
+
+  Future getImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final image = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image != null) {
+      pickImage = File(image.path);
+      update();
+    } else {
+      print("no image selected");
+    }
+  }
+
+  Future uploadImageToFirebase() async {
+    String imgId = DateTime.now().microsecondsSinceEpoch.toString();
+    Reference reference = FirebaseStorage.instance.ref().child('images$imgId');
+    var tst = await reference.putFile(pickImage!);
+    print("valueeeeeeeeeeeeeee===== ${tst}");
+    url.value = await reference.getDownloadURL();
+    print("url===== ${url.value}");
+    update();
   }
 
   Future<void> logIn({
@@ -81,7 +111,7 @@ class AuthenticationServices extends GetxController {
       if (userCredential != null) {
         User? user = userCredential.user;
         Timer(const Duration(seconds: 1), () {
-          Get.toNamed('/home');
+          Get.offNamed('/home');
           Get.snackbar("Login successful", "You are loged In");
         });
         emailController.clear();
@@ -121,7 +151,7 @@ class AuthenticationServices extends GetxController {
       userUrl = user?.photoURL;
       userPhone = user?.phoneNumber;
 
-      Get.toNamed('/home');
+      Get.offNamed('/home');
       googleUserData(user);
     }
     return user;

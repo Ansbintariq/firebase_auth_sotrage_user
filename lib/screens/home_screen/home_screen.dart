@@ -1,5 +1,6 @@
 import 'package:firebase_auth_getx_localization/config/images.dart';
 import 'package:firebase_auth_getx_localization/controller/Auth_controller.dart';
+import 'package:firebase_auth_getx_localization/controller/image_picker_controller.dart';
 import 'package:firebase_auth_getx_localization/model/user_model.dart';
 import 'package:firebase_auth_getx_localization/screens/profile/profile_edit.dart';
 import 'package:firebase_auth_getx_localization/screens/profile/profile_image.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   AuthenticationServices authcontroller = Get.put(AuthenticationServices());
   ProfileController profile = Get.put(ProfileController());
+
   SampleItem? selectedMenu;
 
   @override
@@ -39,16 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(height: 10),
                 Center(
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(() => ProfileImage());
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 30,
-                      backgroundImage: NetworkImage(profile.user.value.url ??
-                          "https://picsum.photos/250?image=9"),
-                    ),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 30,
+                    backgroundImage: NetworkImage(profile.user.value.url ??
+                        "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png"),
                   ),
                 ),
                 SizedBox(height: 10),
@@ -64,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: const Text('My Profile',
                       style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    // Add Navigation logic here
+                    Get.toNamed('/myProfile');
                   },
                 ),
                 ListTile(

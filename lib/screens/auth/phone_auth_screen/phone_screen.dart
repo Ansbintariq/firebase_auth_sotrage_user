@@ -40,6 +40,8 @@ class PhoneLogin extends StatelessWidget {
             SizedBox(
               height: size.height * .03,
             ),
+            //country code +92
+            ////////////////////////////////////////////////////////////////////////
             // Padding(
             //   padding: const EdgeInsets.all(20.0),
             //   child: Container(

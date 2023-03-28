@@ -15,9 +15,8 @@ class ProfileController extends GetxController {
     var res = await _db.collection('users').doc(auth.currentUser!.uid).get();
 //pass model in obs to manage the state if we use simple variable we need to use setstate in initstate
     user.value = userModel.fromJson(res.data()!);
-    print(user.value.email);
+    // print(user.value.email);
   }
-
   // editProfile() {
   //   _db
   //       .collection('users')

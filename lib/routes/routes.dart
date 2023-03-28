@@ -12,6 +12,7 @@ import 'package:firebase_auth_getx_localization/screens/auth/phone_auth_screen/p
 import 'package:flutter/material.dart';
 
 import '../Screens/auth/login_screen/login_screen.dart';
+import '../screens/profile/profile_image.dart';
 
 final Map<String, WidgetBuilder> routes = {
   RoutesConstants.login: (context) => const LoginScreen(),
@@ -20,4 +21,5 @@ final Map<String, WidgetBuilder> routes = {
   RoutesConstants.signup: (context) => const SignUpScreen(),
   RoutesConstants.phonelogin: (context) => PhoneLogin(),
   RoutesConstants.userOtp: (context) => OtpScreen(),
+  RoutesConstants.myProfile: (context) => ProfileScreen(),
 };
