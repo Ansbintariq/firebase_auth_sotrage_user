@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "536138279309",
+    "project_id": "auth-getx-localization",
+    "storage_bucket": "auth-getx-localization.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536138279309:android:976b03c5e4905cb09ef5c4",
+        "android_client_info": {
+          "package_name": "com.example.firebase_auth_getx_localization"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536138279309-prol87fgo23e0msbf55l3nc47s5mtgdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_auth_getx_localization",
+            "certificate_hash": "3941176a2fa45e2942a4807ab55b8a41ec902bb6"
+          }
+        },
+        {
+          "client_id": "536138279309-ek6h2tum0lo6dmpeq3rc1rtgev44t8ms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2oyg62ltpbG9EwCxPLH9IimCJ2dSU54M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536138279309-9nsm32js32jvhog4o3i5cj6v6njv7nvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
