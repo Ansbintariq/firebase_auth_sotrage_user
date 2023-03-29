@@ -22,7 +22,7 @@ class AuthenticationServices extends GetxController {
   final TextEditingController fieldFive = TextEditingController();
   final TextEditingController fieldSix = TextEditingController();
   RxString imagePath = ''.obs;
-  File? pickImage;
+  final pickImage = Rxn<File>();
   FocusNode nameFocus = FocusNode();
   FocusNode emailFocus = FocusNode();
   FocusNode passFocus = FocusNode();
@@ -50,9 +50,11 @@ class AuthenticationServices extends GetxController {
         password: password,
       )
           .then((value) async {
-        await uploadImageToFirebase();
+        if (pickImage.value != null) {
+          await uploadImageToFirebase();
+        }
 
-        print("hellooooooooo ${url.value}");
+        //     print("hellooooooooo ${url.value}");
         FirebaseFirestore.instance
             .collection("users")
             .doc(value.user!.uid)
@@ -63,6 +65,7 @@ class AuthenticationServices extends GetxController {
           'Url': url.value
         });
       }).then((value) => Timer(const Duration(seconds: 1), () {
+                Get.snackbar("Sign Up successful", "You are Sign Up");
                 Get.offNamed('/login');
               }));
       nameController.clear();
@@ -82,20 +85,20 @@ class AuthenticationServices extends GetxController {
       source: ImageSource.gallery,
     );
     if (image != null) {
-      pickImage = File(image.path);
+      pickImage.value = File(image.path);
       update();
     } else {
-      print("no image selected");
+      //  print("no image selected");
     }
   }
 
   Future uploadImageToFirebase() async {
     String imgId = DateTime.now().microsecondsSinceEpoch.toString();
     Reference reference = FirebaseStorage.instance.ref().child('images$imgId');
-    var tst = await reference.putFile(pickImage!);
-    print("valueeeeeeeeeeeeeee===== ${tst}");
+    var tst = await reference.putFile(pickImage.value!);
+    //  print("valueeeeeeeeeeeeeee===== ${tst}");
     url.value = await reference.getDownloadURL();
-    print("url===== ${url.value}");
+    // print("url===== ${url.value}");
     update();
   }
 
@@ -144,6 +147,7 @@ class AuthenticationServices extends GetxController {
           await auth.signInWithCredential(authCredential);
       user = userCredential.user;
       Get.snackbar("Login successful", "You are loged In");
+
       //it will send data to firesotre
       userName = user?.displayName;
       userEmail = user?.email;
@@ -209,7 +213,7 @@ class AuthenticationServices extends GetxController {
         "Login successful",
         ("welcome to our app"),
       );
-      Get.off("/home");
+      Get.offNamed("/home");
       fieldOne.clear();
       fieldTwo.clear();
       fieldThree.clear();
@@ -222,5 +226,11 @@ class AuthenticationServices extends GetxController {
         (e.message.toString()),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

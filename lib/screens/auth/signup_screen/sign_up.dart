@@ -41,8 +41,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         CircleAvatar(
                           backgroundColor: Color.fromARGB(0, 136, 135, 135),
                           radius: 60,
-                          backgroundImage: logic.pickImage != null
-                              ? FileImage(logic.pickImage!) as ImageProvider
+                          backgroundImage: logic.pickImage.value != null
+                              ? FileImage(logic.pickImage.value!)
+                                  as ImageProvider
                               : ExactAssetImage(Images.userImage),
                         ),
                         Positioned(

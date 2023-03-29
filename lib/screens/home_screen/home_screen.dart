@@ -1,13 +1,9 @@
-import 'package:firebase_auth_getx_localization/config/images.dart';
-import 'package:firebase_auth_getx_localization/controller/Auth_controller.dart';
-import 'package:firebase_auth_getx_localization/controller/image_picker_controller.dart';
-import 'package:firebase_auth_getx_localization/model/user_model.dart';
-import 'package:firebase_auth_getx_localization/screens/profile/profile_edit.dart';
-import 'package:firebase_auth_getx_localization/screens/profile/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/Auth_controller.dart';
 import '../../controller/profile_controller.dart';
+import '../profile/profile_edit.dart';
 
 enum SampleItem { itemOne, itemTwo, itemThree }
 
@@ -44,8 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircleAvatar(
                     backgroundColor: Colors.transparent,
                     radius: 30,
-                    backgroundImage: NetworkImage(profile.user.value.url ??
-                        "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png"),
+                    backgroundImage: NetworkImage(profile.user.value.url == null
+                        ? "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png"
+                        : profile.user.value.url!.isEmpty
+                            ? "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_1280.png"
+                            : profile.user.value.url!),
                   ),
                 ),
                 SizedBox(height: 10),

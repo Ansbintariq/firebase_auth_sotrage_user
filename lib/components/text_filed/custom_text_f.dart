@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final double feildHeight;
   final FocusNode? focusNode;
   final TextEditingController? controller;
+  final bool? enableEdit;
 
   CustomTextField(
       {super.key,
@@ -36,6 +37,7 @@ class CustomTextField extends StatelessWidget {
       this.suffixIcon,
       this.prefixIcon,
       this.suffixTap,
+      this.enableEdit,
       this.prefixTap});
 
   @override
@@ -71,6 +73,7 @@ class CustomTextField extends StatelessWidget {
             ],
           ),
           child: TextFormField(
+            enabled: enableEdit,
             keyboardType: inputType,
             textInputAction: inputAction,
             obscureText: obscureText,

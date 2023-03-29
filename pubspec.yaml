@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^6.0.0
   country_code_picker: ^3.0.0
   image_picker: ^0.8.7
+  connectivity_plus: ^3.0.3
   
   
 
