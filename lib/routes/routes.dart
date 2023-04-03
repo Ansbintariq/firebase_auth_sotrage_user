@@ -3,6 +3,7 @@
 //       '/reg': (context) => const SignUpScreen(),
 //       '/home': (context) => const HomeScreen(),
 
+import 'package:firebase_auth_getx_localization/components/bottom_navigationBar/bottom_navigation.dart';
 import 'package:firebase_auth_getx_localization/routes/routes_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ import '../screens/profile/profile_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   RoutesConstants.login: (context) => const LoginScreen(),
-  RoutesConstants.home: (context) => const HomeScreen(),
+  RoutesConstants.bottomnavigation: (context) => const Dashbord(),
   RoutesConstants.started: (context) => const GetStarted(),
   RoutesConstants.signup: (context) => const SignUpScreen(),
   RoutesConstants.phonelogin: (context) => PhoneLogin(),

@@ -58,12 +58,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ? FileImage(controller.pickImage
                                     .value!) //this will update image on View screen from conroller
                                 as ImageProvider
-                            : NetworkImage(profile.user.value.url == null
-                                ? Images.userImage
-                                : profile.user.value.url!.isEmpty
-                                    ? Images.userImage
-                                    : profile.user.value
-                                        .url!), //this will get image from firebase
+                            : profile.user.value.url == null ||
+                                    profile.user.value.url!.isEmpty
+                                ? AssetImage(Images.userImage) as ImageProvider
+                                : NetworkImage(profile.user.value
+                                    .url!), //this will get image from firebase
                       ),
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(40),
@@ -77,38 +76,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       clipBehavior: Clip.none,
                       children: [
                         CircleAvatar(
-                          backgroundColor: Color.fromARGB(255, 169, 169, 168),
-                          radius: MediaQuery.of(context).size.height * .09,
-                          backgroundImage: controller.pickImage.value != null
-                              ? FileImage(controller.pickImage.value!)
-                                  as ImageProvider
-                              : NetworkImage(profile.user.value.url == null
-                                  ? Images.userImage
-                                  : profile.user.value.url!.isEmpty
-                                      ? Images.userImage
-                                      : profile.user.value.url!),
-                        ),
+                            backgroundColor: Color.fromARGB(255, 169, 169, 168),
+                            radius: MediaQuery.of(context).size.height * .08,
+                            backgroundImage: controller.pickImage.value != null
+                                ? FileImage(controller.pickImage.value!)
+                                    as ImageProvider
+                                : profile.user.value.url == null ||
+                                        profile.user.value.url!.isEmpty
+                                    ? AssetImage(Images.userImage)
+                                        as ImageProvider
+                                    : NetworkImage(profile.user.value.url!)),
                         Positioned(
                           right: 0,
                           bottom: 0,
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * .04,
-                            width: MediaQuery.of(context).size.width * .09,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                borderRadius: BorderRadius.circular(60)),
-                            child: IconButton(
-                              onPressed: () {
-                                controller.getImageFromGallery();
-                              },
-                              icon: const Icon(
-                                Icons.edit,
-                                size: 16,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
+                          child: RawMaterialButton(
+                            constraints: BoxConstraints.tight(Size(30, 30)),
+                            onPressed: () {
+                              controller.getImageFromGallery();
+                            },
+                            child: Icon(Icons.camera_alt, size: 18),
+                            shape: new CircleBorder(),
+                            elevation: 0.0,
+                            fillColor: Color.fromARGB(255, 196, 194, 194),
                           ),
                         )
                       ],

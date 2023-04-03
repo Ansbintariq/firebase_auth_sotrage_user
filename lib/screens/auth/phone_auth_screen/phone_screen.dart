@@ -204,7 +204,8 @@ class PhoneLogin extends StatelessWidget {
                 RawMaterialButton(
                   constraints: BoxConstraints.tight(const Size(50, 70)),
                   onPressed: () {
-                    Get.offNamed('/userOtp');
+                    controller.signInWithFacebook();
+                    // Get.offNamed('/userOtp');
                   },
                   shape: const CircleBorder(),
                   elevation: 10,

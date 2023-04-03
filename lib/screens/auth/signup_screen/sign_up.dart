@@ -233,12 +233,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   RawMaterialButton(
                     elevation: 10,
                     constraints: BoxConstraints.tight(const Size(50, 70)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.offNamed('/phonelogin');
+                    },
+                    shape: const CircleBorder(),
+                    fillColor: const Color.fromARGB(255, 230, 229, 229),
+                    child: const Icon(
+                      Icons.phone,
+                      size: 35,
+                      color: Color.fromARGB(255, 80, 96, 238),
+                    ),
+                  ),
+                  RawMaterialButton(
+                    elevation: 10,
+                    constraints: BoxConstraints.tight(const Size(50, 70)),
+                    onPressed: () {
+                      controller.signInWithFacebook();
+                    },
                     shape: const CircleBorder(),
                     fillColor: const Color.fromARGB(255, 230, 229, 229),
                     child: const Icon(
                       Icons.facebook,
-                      size: 40,
+                      size: 35,
                       color: Color.fromARGB(255, 80, 96, 238),
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,6 +37,8 @@ class AuthenticationServices extends GetxController {
   FirebaseFirestore _db = FirebaseFirestore.instance;
   RxString verifyId = ''.obs;
   var url = ''.obs;
+  //facebook user data variable
+
   Future<void> signUp({
     required String name,
     required String email,
@@ -198,7 +201,7 @@ class AuthenticationServices extends GetxController {
           ("OTP sent successfully "),
         );
         phoneController.clear();
-        Get.off('/userOtp');
+        Get.offNamed('/userOtp');
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -225,6 +228,43 @@ class AuthenticationServices extends GetxController {
         "OTP Failed",
         (e.message.toString()),
       );
+    }
+  }
+
+  Future signInWithFacebook() async {
+    var userData;
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance
+        .login(permissions: ['email', 'public_profile']);
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    // Once signed in, return the UserCredential
+    //use await  because it will take time to fetch access token if you not use 1st login and second time expection
+    var accessToken = await FirebaseAuth.instance
+        .signInWithCredential(facebookAuthCredential);
+
+    print("accessToken    --==============>$facebookAuthCredential");
+
+    if (accessToken != null) {
+      userData = await FacebookAuth.instance.getUserData();
+
+      //  var uid = auth.currentUser!.uid;
+      if (userData != null) {
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(auth.currentUser!.uid)
+            .set({
+          'id': auth.currentUser!.uid,
+          'name': userData['name'],
+          'email': userData['email'],
+          'Url': userData['picture']['data']['url']
+        });
+        print("hello==============>$userData");
+      }
+
+      print("user data =============>$userData");
+      Get.offNamed("/home");
     }
   }
 

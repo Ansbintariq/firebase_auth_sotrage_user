@@ -1,16 +1,41 @@
 # firebase_auth_getx_localization
 
-A new Flutter project.
+20 March,2023 Monday:
+Authentication with Firebase (email and password) as well as User stored in FireStore Database
+Navigation using Getx Named Routes
+Working on Auth with Gmail.
 
-## Getting Started
+21 March,2023 Monday:
+Google Authentication
+GetX Utils
 
-This project is a starting point for a Flutter application.
+(22/3/2023 Progress Report)
+Validation
+Custom Form Field
+Custom Button
 
-A few resources to get you started if this is your first Flutter project:
+(23/3/2023 Progress Report)
+Phone Number Authentication using OTP
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+(27/03/2023 Progress Report)
+Working on User Profile
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+(28/03/2023 Progress Report)
+worked on firebase storage
+
+(29/03/2023 Progress Report)
+User Profile updated
+CRUD operation on user Profile using Firebase
+
+(30/03/2023 Progress Report)
+Internet connectivity
+Bottom Navigation bar
+Working on Facebook Authentication
+
+(31/03/2023)  Progress Report
+Facebook Authentication
+Ongoing Localization
+
+(03/04/2023)  Progress Report
+Localization
+revising basic concepts of dart
