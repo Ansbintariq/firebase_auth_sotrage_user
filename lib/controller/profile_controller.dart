@@ -9,7 +9,7 @@ class ProfileController extends GetxController {
   AuthenticationServices controller = Get.put(AuthenticationServices());
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  var user = userModel().obs;
+  var user = UserModel().obs;
   RxBool loading = false.obs;
 
   Future getUserDetails() async {
@@ -17,7 +17,7 @@ class ProfileController extends GetxController {
     //  final snapshot = auth.currentUser;
     var res = await _db.collection('users').doc(auth.currentUser!.uid).get();
 //pass model in obs to manage the state if we use simple variable we need to use setstate in initstate
-    user.value = userModel.fromJson(res.data()!);
+    user.value = UserModel.fromJson(res.data()!);
     // print(user.value.email);
   }
   // editProfile() {
@@ -27,7 +27,7 @@ class ProfileController extends GetxController {
   //       .snapshots();
   // }
 
-  Future<void> updateUser(userModel user) async {
+  Future<void> updateUser(UserModel user) async {
     loading.value = true;
     if (controller.pickImage.value != null) {
       await controller.uploadImageToFirebase();

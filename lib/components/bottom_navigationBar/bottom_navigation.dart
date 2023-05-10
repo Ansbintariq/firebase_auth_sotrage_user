@@ -35,8 +35,8 @@ class _DashbordState extends State<Dashbord> {
             });
           },
           showUnselectedLabels: true,
-          unselectedItemColor: Color.fromARGB(255, 34, 195, 207),
-          selectedItemColor: Color.fromARGB(255, 4, 98, 187),
+          unselectedItemColor: const Color.fromARGB(255, 34, 195, 207),
+          selectedItemColor: const Color.fromARGB(255, 4, 98, 187),
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(

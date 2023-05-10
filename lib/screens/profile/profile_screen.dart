@@ -164,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           bgcolor: const Color.fromARGB(255, 33, 187, 243),
                           text: "Update",
                           onTap: () async {
-                            final userData = userModel(
+                            final userData = UserModel(
                               name: controller.nameController.text,
                               email: controller.emailController.text,
                               phone: controller.phoneController.text,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_auth_getx_localization/model/user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -35,6 +36,9 @@ class AuthenticationServices extends GetxController {
   RxBool loading = false.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+
   RxString verifyId = ''.obs;
   var url = ''.obs;
   //facebook user data variable
@@ -267,7 +271,14 @@ class AuthenticationServices extends GetxController {
       Get.offNamed("/home");
     }
   }
+  Future<List<UserModel>> getAllUsers() async{
+  final snapshot= await firestore.collection("users").get();
+  print("future all user data");
+      return snapshot.docs.map((doc) {
+        return UserModel.fromSnapshot(doc);
+      }).toList();
 
+  }
   @override
   void dispose() {
     // TODO: implement dispose

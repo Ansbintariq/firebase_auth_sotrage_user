@@ -48,6 +48,7 @@ dependencies:
   flutter_facebook_auth: ^5.0.8
   flutter_localizations:
     sdk: flutter
+  cached_network_image: ^3.2.3
   
   
 

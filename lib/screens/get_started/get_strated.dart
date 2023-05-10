@@ -18,6 +18,7 @@ class _GetStartedState extends State<GetStarted> {
   late StreamSubscription subscription;
   Rx isDeviceConected = false.obs;
   RxBool isAlertSet = false.obs;
+
   getConnectivity() => subscription = Connectivity()
           .onConnectivityChanged
           .listen((ConnectivityResult result) async {
@@ -29,6 +30,7 @@ class _GetStartedState extends State<GetStarted> {
           isAlertSet.value = true;
         }
       });
+
   @override
   void dispose() {
     subscription.cancel();
@@ -38,6 +40,7 @@ class _GetStartedState extends State<GetStarted> {
   @override
   void initState() {
     getConnectivity();
+
     super.initState();
   }
 

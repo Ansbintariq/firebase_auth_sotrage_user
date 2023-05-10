@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../auth/components/mian_drawer.dart';
+import '../home_screen/widget/mian_drawer.dart';
 
 class SecondScreen extends StatefulWidget {
   const SecondScreen({super.key});
@@ -14,12 +14,12 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("second"),
+        title: const Text("second"),
       ),
       drawer: MainDrawer(),
       body: Center(
         child: Column(
-          children: [Text("data")],
+          children: [const Text("data")],
         ),
       ),
     );
