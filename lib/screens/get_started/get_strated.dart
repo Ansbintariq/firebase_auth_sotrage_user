@@ -39,6 +39,7 @@ class _GetStartedState extends State<GetStarted> {
 
   @override
   void initState() {
+
     getConnectivity();
 
     super.initState();
@@ -55,7 +56,7 @@ class _GetStartedState extends State<GetStarted> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Get.toNamed("/login");
+
               },
               child: Text(
                   AppLocalizations.of(context)?.translate('hello') ?? "null"),

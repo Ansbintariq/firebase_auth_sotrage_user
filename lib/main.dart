@@ -1,14 +1,11 @@
 import 'package:firebase_auth_getx_localization/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'Screens/auth/login_screen/login_screen.dart';
-import 'Screens/auth/signup_screen/sign_up.dart';
-import 'Screens/get_started/get_strated.dart';
-import 'Screens/home_screen/home_screen.dart';
 import 'components/helper/localization_service.dart';
-import 'screens/auth/phone_auth_screen/otp_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +20,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.white, // Set the desired background color here
+      ),
+    );
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: routes,
       supportedLocales: const [
         Locale('en', 'US'),

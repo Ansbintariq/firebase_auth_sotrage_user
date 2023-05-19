@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Screens/home_screen/home_screen.dart';
+import '../../screens/chat_screen/model/chat_user_model.dart';
 import '../../screens/profile/profile_screen.dart';
 import '../../screens/second/second_screen.dart';
 import '../../screens/third/third_screen.dart';
@@ -15,7 +16,7 @@ class Dashbord extends StatefulWidget {
 class _DashbordState extends State<Dashbord> {
   int selectedindex = 0;
   List bottomscreen = [
-    const HomeScreen(),
+     HomeScreen(),
     const SecondScreen(),
     const ThirdScreen(),
     ProfileScreen(),

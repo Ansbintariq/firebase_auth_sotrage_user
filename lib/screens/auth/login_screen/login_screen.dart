@@ -1,4 +1,3 @@
-import 'package:firebase_auth_getx_localization/Screens/auth/phone_auth_screen/phone_screen.dart';
 import 'package:firebase_auth_getx_localization/components/text_filed/custom_text_f.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,7 @@ import '../../../components/buttons/custom_button.dart';
 import '../../../config/constant.dart';
 import '../../../config/images.dart';
 import '../../../controller/Auth_controller.dart';
-import '../components/login_form.dart';
+import '../../../mock_data/mock_theme_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +16,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  ThemeModel? themeModel;
+  @override
+  void initState() {
+    themeModel=ThemeModel();
+    super.initState();
+  }
   final _formKey = GlobalKey<FormState>();
 
   AuthenticationServices controller = Get.put(AuthenticationServices());
@@ -204,6 +209,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
+          GestureDetector(
+            onTap:() {
+              print(themeModel?.mockTheme['bg']);
+            },
+            child: Container(
+              height: 40,
+              width: 40,
+               // color: Color(int.parse(themeModel!.mockTheme['app_bar'].toString())),
+            //  int.parse(themeModel!.mockTheme['app_bar'].toString())
+            ),
+          )
           ],
         ),
       ),

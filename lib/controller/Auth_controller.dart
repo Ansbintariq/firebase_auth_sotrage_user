@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth_getx_localization/model/user_model.dart';
+import 'package:firebase_auth_getx_localization/screens/chat_screen/model/chat_user_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -16,6 +17,7 @@ class AuthenticationServices extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
   // 4 text editing controllers that associate with the 4 input otp fields
   final TextEditingController fieldOne = TextEditingController();
   final TextEditingController fieldTwo = TextEditingController();
@@ -38,9 +40,9 @@ class AuthenticationServices extends GetxController {
   FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-
   RxString verifyId = ''.obs;
   var url = ''.obs;
+
   //facebook user data variable
 
   Future<void> signUp({
@@ -168,14 +170,21 @@ class AuthenticationServices extends GetxController {
     return user;
   }
 
-  googleUserData(user) async {
-    FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
-      'name': userName,
-      'email': userEmail,
-      'uid': userId,
-      'Url': userUrl,
-      'phone': userPhone
-    });
+  Future<void>googleUserData(user) async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+    final chatUser = ChatUser(
+        image: userUrl.toString(),
+        about: "hello word",
+        name: userName.toString(),
+        createdAt: time,
+        isOnline: 'false',
+        id: auth.currentUser!.uid,
+        lastActive: time,
+        email: userEmail.toString(),
+        pushToken: '');
+    await firestore.collection('users').doc(user!.uid).set(
+      chatUser.toJson()
+    );
   }
 
   Future<void> signOut() async {
@@ -271,14 +280,7 @@ class AuthenticationServices extends GetxController {
       Get.offNamed("/home");
     }
   }
-  Future<List<UserModel>> getAllUsers() async{
-  final snapshot= await firestore.collection("users").get();
-  print("future all user data");
-      return snapshot.docs.map((doc) {
-        return UserModel.fromSnapshot(doc);
-      }).toList();
 
-  }
   @override
   void dispose() {
     // TODO: implement dispose
