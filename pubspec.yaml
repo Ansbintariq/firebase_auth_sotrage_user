@@ -39,6 +39,8 @@ dependencies:
   firebase_core: ^2.4.0
   firebase_storage: ^11.0.16
   cloud_firestore: ^4.2.0
+  firebase_messaging: ^14.4.1
+  flutter_local_notifications: ^14.0.0
   get: ^4.6.5
   google_sign_in: ^6.0.0
   country_code_picker: ^3.0.0

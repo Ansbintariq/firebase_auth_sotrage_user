@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../model/user_model.dart';
+import '../screens/chat_screen/model/chat_user_model.dart';
 
 
 
@@ -21,4 +22,14 @@ class UserController extends GetxController {
     }).toList();
 
   }
+
+  // update online or last active status of user
+  Future<void> updateActiveStatus(bool isOnline,String token) async {
+    firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'is_online': "$isOnline",
+      'last_active': DateTime.now().millisecondsSinceEpoch.toString(),
+      'push_token': token,
+    });
+  }
+
 }

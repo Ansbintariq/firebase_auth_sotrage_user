@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../config/images.dart';
 import '../../controller/Auth_controller.dart';
+import '../../controller/notifications_controller.dart';
 import '../../controller/profile_controller.dart';
 import 'widget/mian_drawer.dart';
 
@@ -22,11 +23,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   UserController userController = Get.put(UserController());
   ProfileController profile = Get.put(ProfileController());
+  NotificationController notificationController = Get.put(NotificationController());
   List<ChatUser> list = [];
   SampleItem? selectedMenu;
-
+  @override
+  void initState() {
+    notificationController.getFirebaseMessagingToken();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     profile.getUserDetails();

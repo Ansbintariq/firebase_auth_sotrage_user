@@ -1,19 +1,12 @@
 import 'package:firebase_auth_getx_localization/components/buttons/custom_button.dart';
 import 'package:firebase_auth_getx_localization/model/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth_getx_localization/main.dart' as app;
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:restart_app/restart_app.dart';
-
 import '../../components/text_filed/custom_text_f.dart';
 import '../../config/images.dart';
 import '../../controller/Auth_controller.dart';
-
 import '../../controller/profile_controller.dart';
-import '../../main.dart';
-import '../../themes/colors/dark_theme_color.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});

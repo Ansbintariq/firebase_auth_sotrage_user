@@ -164,6 +164,7 @@ class AuthenticationServices extends GetxController {
       userUrl = user?.photoURL;
       userPhone = user?.phoneNumber;
 
+
       Get.offNamed('/home');
       googleUserData(user);
     }
@@ -177,7 +178,7 @@ class AuthenticationServices extends GetxController {
         about: "hello word",
         name: userName.toString(),
         createdAt: time,
-        isOnline: 'false',
+        isOnline: "false",
         id: auth.currentUser!.uid,
         lastActive: time,
         email: userEmail.toString(),
