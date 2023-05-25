@@ -11,10 +11,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../screens/chat_screen/model/chat_user_model.dart';
+import 'notifications_controller.dart';
 
 class ChatController extends GetxController {
   TextEditingController message = TextEditingController();
-
+  NotificationController notificationController = Get.put(NotificationController());
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -40,9 +41,9 @@ class ChatController extends GetxController {
   // this function is use to send all messages
   Future<void> sendMessage(ChatUser chatUser,String msg,Type type) async{
     final time=DateTime.now().millisecondsSinceEpoch.toString();
-    final path=firestore.collection('chats/${getConversationId(chatUser.id)}/messages/');
-    final Message message =Message(toId: chatUser.id, msg: msg, read: "", type: type, fromId: auth.currentUser!.uid, sent: time);
-    await path.doc(time).set(message.toJson());
+    final path= firestore.collection('chats/${getConversationId(chatUser.id)}/messages/');
+    final Message message = Message(toId: chatUser.id, msg: msg, read: "", type: type, fromId: auth.currentUser!.uid, sent: time);
+    await path.doc(time).set(message.toJson()).then((value) => notificationController.sendPushNotification(chatUser,type!=Type.text? 'image' : msg));
   }
 
   Future getImageFromGallery(ChatUser chatUser) async {

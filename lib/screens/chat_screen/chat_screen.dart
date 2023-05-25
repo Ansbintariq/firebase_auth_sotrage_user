@@ -137,13 +137,14 @@ class _ChatScreenState extends State<ChatScreen> {
             IconButton(
               onPressed: () async {
                 if (chatController.message.text.isNotEmpty) {
+
+                  chatController.sendMessage(
+                      widget.user, chatController.message.text, Type.text);
+                  chatController.message.clear();
                   scrollController
                       .animateTo(scrollController.position.maxScrollExtent,
                       duration: Duration(milliseconds: 200),
                       curve: Curves.easeOut);
-                  chatController.sendMessage(
-                      widget.user, chatController.message.text, Type.text);
-                  chatController.message.clear();
                 }
               },
               icon: const Icon(
