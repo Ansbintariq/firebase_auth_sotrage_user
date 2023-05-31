@@ -1,15 +1,13 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:firebase_auth_getx_localization/helper/data_time_utils.dart';
 import 'package:firebase_auth_getx_localization/screens/chat_screen/model/chat_user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import '../../config/images.dart';
 import '../../controller/Auth_controller.dart';
 import '../../controller/chat_controller.dart';
+import '../../globals.dart';
 import 'model/messages_model.dart';
-import 'widget/chat_details.dart';
 import 'widget/message_card.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -26,161 +24,168 @@ class _ChatScreenState extends State<ChatScreen> {
   ScrollController scrollController = ScrollController();
   List<Message> _list = [];
 
-  final name = Get.arguments[0];
-
-  final photo = Get.arguments[1];
+  // final name = Get.arguments[0];
+  //
+  // final photo = Get.arguments[1];
 
   FocusNode _focusNode = FocusNode();
 
-  @override
   void initState() {
     super.initState();
-    // Scroll to the last chat message when entering the chat screen
+    Global.globalId=widget.user.id;
+   // Wait for the initial data from the stream before scrolling to the bottom
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollToBottom();
+     // apiCall();
+     // scrollToBottom();
     });
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //resizeToAvoidBottomInset: false,
-      appBar: customMyAppBar(),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          child: Column(
-              children: [
-          Expanded(
-          child: StreamBuilder(
-          stream: chatController.getAllMessages(widget.user),
-          builder: (context, snapshot) {
-            final data = snapshot.data?.docs;
-            _list =
-                data?.map((e) => Message.fromJson(e.data())).toList() ??
-                    [];
-            if (_list.isNotEmpty) {
-              return ListView.builder(
-                controller: scrollController,
-                itemCount: _list.length,
-                padding: const EdgeInsets.only(top: 10, bottom: 40),
-                // physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return MessageCard(
-                    message: _list[index],
-                  );
-                },
-              );
-            } else {
-              return Center(
-                child: Text("say Hi"),
-              );
-            }
+    return WillPopScope(
+      onWillPop: () async{
+        Global.globalId='';
+        return true;
+      },
+      child: Scaffold(
+        //resizeToAvoidBottomInset: false,
+        appBar: customMyAppBar(),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
           },
-        ),
-      ),
-      // chat input message
-      Container(
-        padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
-        width: double.infinity,
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.lightBlue,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: IconButton(
-                    onPressed: () async {
-                      chatController.getImageFromGallery(widget.user);
-                      // await controller.uploadImageToFirebase();
-                    },
-                    icon: Icon(
-                      Icons.image_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  )),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
+          child: Container(
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            child: Column(
+                children: [
             Expanded(
-              child: TextField(
-                controller: chatController.message,
-                focusNode: _focusNode,
-                decoration: InputDecoration(
-                    hintText: "Write message...",
-                    hintStyle: TextStyle(color: Colors.black54),
-                    border: InputBorder.none),
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            IconButton(
-              onPressed: () async {
-                if (chatController.message.text.isNotEmpty) {
-
-                  chatController.sendMessage(
-                      widget.user, chatController.message.text, Type.text);
-                  chatController.message.clear();
-                  scrollController
-                      .animateTo(scrollController.position.maxScrollExtent,
-                      duration: Duration(milliseconds: 200),
-                      curve: Curves.easeOut);
+            child: StreamBuilder(
+            stream: chatController.getAllMessages(widget.user),
+            builder: (context, snapshot) {
+              final data = snapshot.data?.docs;
+              _list =
+                  data?.map((e) => Message.fromJson(e.data())).toList() ??
+                      [];
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                if(scrollController.hasClients){
+                  scrollToBottom();
                 }
-              },
-              icon: const Icon(
-                Icons.send,
-                color: Color(0xff8cc99a),
-                size: 18,
-              ),
-            ),
-          ],
+              });
+              if (_list.isNotEmpty) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  controller: scrollController,
+                  itemCount: _list.length,
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  // physics: const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return MessageCard(
+                      message: _list[index],
+                    );
+                  },
+                );
+              } else {
+                return Center(
+                  child: Text("say Hi"),
+                );
+              }
+            },
+          ),
         ),
+        // chat input message
+        Container(
+          padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+          width: double.infinity,
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.lightBlue,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: IconButton(
+                      onPressed: () async {
+                        chatController.getImageFromGallery(widget.user);
+                        // await controller.uploadImageToFirebase();
+                      },
+                      icon: Icon(
+                        Icons.image_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: TextField(
+                  controller: chatController.message,
+                  focusNode: _focusNode,
+                  decoration: InputDecoration(
+                      hintText: "Write message...",
+                      hintStyle: TextStyle(color: Colors.black54),
+                      border: InputBorder.none),
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              IconButton(
+                onPressed: () async {
+                  if (chatController.message.text.isNotEmpty) {
+
+                    chatController.sendMessage(
+                        widget.user, chatController.message.text, Type.text);
+                    chatController.message.clear();
+                    scrollController
+                        .animateTo(scrollController.position.maxScrollExtent,
+                        duration: Duration(milliseconds: 200),
+                        curve: Curves.easeOut);
+                  }
+                },
+                icon: const Icon(
+                  Icons.send,
+                  color: Color(0xff8cc99a),
+                  size: 18,
+                ),
+              ),
+            ],
+          ),
+        ),
+        ],
+      ),)
+      ,
+      )
+      ,
       ),
-      ],
-    ),)
-    ,
-    )
-    ,
     );
   }
 
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
   void scrollToBottom() {
-    print("calling");
+    //print("calling");
     // scrollController.jumpTo(500.0);
     final bottomOffset = scrollController.position.maxScrollExtent;
     scrollController.animateTo(
       bottomOffset,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
-    print("data===>${scrollController.position.maxScrollExtent}");
+   // print("data===>${scrollController.position.maxScrollExtent}");
   }
 
 

@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
 import '../model/user_model.dart';
-import '../screens/chat_screen/model/chat_user_model.dart';
 
 
 

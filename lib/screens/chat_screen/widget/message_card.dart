@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../config/images.dart';
 import '../../../controller/Auth_controller.dart';
+import 'chat_image_screen.dart';
 
 class MessageCard extends StatefulWidget {
   const MessageCard({Key? key, required this.message}) : super(key: key);
@@ -48,15 +49,32 @@ class _MessageCardState extends State<MessageCard> {
                         widget.message.msg,
                         style: const TextStyle(fontSize: 15),
                       )
-                    : CachedNetworkImage(
-                        height: MediaQuery.of(context).size.height * .3,
-                        width: MediaQuery.of(context).size.width * .6,
-                        imageUrl: "${widget.message.msg}",
-                        errorWidget: (c, o, s) => Icon(
-                          Icons.image_rounded,
-                          size: 100,
+                    :
+                    // FadeInImage.assetNetwork(
+                    //
+                    //    fit: BoxFit.cover,
+                    //    placeholder: Images.userImage,
+                    //    image:
+                    //    "${widget.message.msg}",
+                    //    imageErrorBuilder: (c, o, s) =>
+                    //        Image.asset(Images.google),
+                    //  )
+
+                    GestureDetector(
+                        onTap: () {
+                          Get.to(() => ImagePreview(),
+                              arguments: [widget.message.msg]);
+                        },
+                        child: CachedNetworkImage(
+                          height: MediaQuery.of(context).size.height * .3,
+                          width: MediaQuery.of(context).size.width * .6,
+                          imageUrl: "${widget.message.msg}",
+                          errorWidget: (c, o, s) => Icon(
+                            Icons.image_rounded,
+                            size: 100,
+                          ),
+                          fit: BoxFit.cover,
                         ),
-                        fit: BoxFit.cover,
                       )),
           ),
           Padding(
@@ -88,21 +106,29 @@ class _MessageCardState extends State<MessageCard> {
                     topLeft: Radius.circular(15),
                   ),
                   color: Colors.blue[200]),
-              padding:  widget.message.type == Type.text? const EdgeInsets.symmetric(horizontal: 10, vertical: 10):const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              padding: widget.message.type == Type.text
+                  ? const EdgeInsets.symmetric(horizontal: 10, vertical: 10)
+                  : const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               child: widget.message.type == Type.text
                   ? Text(
                       widget.message.msg,
                       style: const TextStyle(fontSize: 15),
                     )
-                  : CachedNetworkImage(
-                      height: MediaQuery.of(context).size.height * .30,
-                      width: MediaQuery.of(context).size.width * .6,
-                      imageUrl: "${widget.message.msg}",
-                      errorWidget: (c, o, s) => Icon(
-                        Icons.image_rounded,
-                        size: 100,
+                  : GestureDetector(
+                      onTap: () {
+                        Get.to(() => ImagePreview(),
+                            arguments: [widget.message.msg]);
+                      },
+                      child: CachedNetworkImage(
+                        height: MediaQuery.of(context).size.height * .30,
+                        width: MediaQuery.of(context).size.width * .6,
+                        imageUrl: "${widget.message.msg}",
+                        errorWidget: (c, o, s) => Icon(
+                          Icons.image_rounded,
+                          size: 100,
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
             ),
           ),

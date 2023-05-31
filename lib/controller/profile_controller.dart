@@ -14,7 +14,6 @@ class ProfileController extends GetxController {
 
   Future getUserDetails() async {
     //simple this also retrun uid,
-    //  final snapshot = auth.currentUser;
     var res = await _db.collection('users').doc(auth.currentUser!.uid).get();
 //pass model in obs to manage the state if we use simple variable we need to use setstate in initstate
     user.value = UserModel.fromJson(res.data()!);

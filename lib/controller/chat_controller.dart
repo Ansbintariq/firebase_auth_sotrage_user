@@ -17,6 +17,7 @@ class ChatController extends GetxController {
   TextEditingController message = TextEditingController();
   NotificationController notificationController = Get.put(NotificationController());
 
+
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;

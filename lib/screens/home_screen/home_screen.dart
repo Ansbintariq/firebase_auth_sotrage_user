@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   ProfileController profile = Get.put(ProfileController());
   NotificationController notificationController = Get.put(NotificationController());
   List<ChatUser> list = [];
-  SampleItem? selectedMenu;
   @override
   void initState() {
     notificationController.getFirebaseMessagingToken();
@@ -68,19 +67,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               horizontal: 10.0, vertical: 6.0),
                           child: GestureDetector(
                             onTap: () {
-                               Get.to(()=>ChatScreen(user: list[index]),arguments: [list[index].name,list[index].image]);
+                               Get.to(()=>ChatScreen(user: list[index]));
                             },
                             child: Container(
                               decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(64, 75, 96, .9)),
+                                  color: Color.fromRGBO(
+                                      255, 255, 255, 0.9019607843137255)),
                               child: ListTile(
                                 leading: Container(
                                   padding: const EdgeInsets.only(right: 12.0),
-                                  decoration: const BoxDecoration(
+                                  decoration:  BoxDecoration(
                                       border: Border(
                                           right: BorderSide(
                                               width: 1.0,
-                                              color: Colors.white24))),
+                                              color: Color(0xffb4b4b4)))),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(60),
                                     child: CachedNetworkImage(
@@ -100,18 +100,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 title: Text("${list[index].name}",
                                     style:
-                                        const TextStyle(color: Colors.white)),
+                                        const TextStyle(color: Colors.black)),
                                 trailing: Icon(Icons.check_circle),
                                 subtitle: Row(
                                   children: [
                                     const Icon(Icons.email_outlined,
-                                        color: Color(0xffece6e6)),
+                                        color: Color(0xff000000)),
                                     Expanded(
                                       child: Text("${list[index].email}",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                              color: Colors.white,
+                                              color: Colors.black,
                                               overflow: TextOverflow.ellipsis)),
                                     )
                                   ],

@@ -103,7 +103,7 @@ class PhoneLogin extends StatelessWidget {
                       prefixTap: () {},
                       // headerText: 'Phone',
                       controller: controller.phoneController,
-                      hintText: "Enter Your Number  ",
+                      hintText: "Enter Your Number with +92 ",
                       inputType: TextInputType.phone,
                       inputAction: TextInputAction.done,
                       validator: (value) {

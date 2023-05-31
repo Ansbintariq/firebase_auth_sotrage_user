@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 RawMaterialButton(
                   constraints: BoxConstraints.tight(const Size(50, 70)),
                   onPressed: () {
-                    Get.offNamed('/phonelogin');
+                  //  Get.offNamed('/phonelogin');
                   },
                   shape: const CircleBorder(),
                   elevation: 10,

@@ -24,4 +24,5 @@ final Map<String, WidgetBuilder> routes = {
   RoutesConstants.phonelogin: (context) => PhoneLogin(),
   RoutesConstants.userOtp: (context) => OtpScreen(),
   RoutesConstants.myProfile: (context) => ProfileScreen(),
+  RoutesConstants.chat: (context) => HomeScreen(),
 };

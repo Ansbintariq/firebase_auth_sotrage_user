@@ -33,20 +33,28 @@ class NotificationController extends GetxController{
      });
    }
 
-  // for sending push notification
+  // for sending push notification for foreground and background
    Future<void> sendPushNotification(
+
       ChatUser chatUser, String msg) async {
     try {
+      User user=auth.currentUser!;
+      log("hello auth ${user.uid}");
+Map<String ,dynamic> payload={
+  'id':'${auth.currentUser!.uid}',
+  "pandy":"hello pandy",
+};
       final body = {
         "to": chatUser.pushToken,
         "notification": {
           "title": auth.currentUser!.displayName,//our name should be send
           "body": msg,
+           //id for id user is in chat then do not send foreground notification
           "android_channel_id": "chats"
         },
-        // "data": {
-        //   "some_data": "User ID: ${me.id}",
-        // },
+        "data": {
+          "id": "${auth.currentUser!.uid}",
+        },
       };
 
       var res = await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -56,10 +64,12 @@ class NotificationController extends GetxController{
             'key=AAAAfNRU6Y0:APA91bHuz5PFUEVR99HUwlyX2pJuLxwZQwSGA-jyN9R-wQPTcYZTPMePem5RNxbRI1FoTkcftLMMEcYfjdn5V8regraaWI84lRdbTGA49rzXVU8KnUHfIocjQjKPtHLnHYUq8dRh76YI'
           },
           body: jsonEncode(body));
-      log('Response status: ${res.statusCode}');
-      log('Response body: ${res.body}');
+      // log('Response status: ${res.statusCode}');
+      // log('Response body: ${res.body}');
     } catch (e) {
       log('\nsendPushNotificationE: $e');
     }
   }
+
+
 }
